@@ -3,11 +3,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send_email(recipient_email, subject, body):
-    # Email configuration
+    # Hardcoded Email Credentials (Security Risk)
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
-    smtp_user = 'rhjananiya@gmail.com'
-    smtp_password = 'dqdy pbav ztyn mjdv'
+    smtp_user = 'rhjananiya@gmail.com'  # Replace with your email
+    smtp_password = 'dqdy pbav ztyn mjdv'  # Replace with your App Password (not your actual password)
 
     # Create a MIME message
     msg = MIMEMultipart()
@@ -33,7 +33,7 @@ def send_email(recipient_email, subject, body):
         print(f'Failed to send email: {e}')
 
 # Example usage
-if _name_ == '_main_':
+if __name__ == '__main__':
     recipient_email = 'h0r402040@gmail.com'
     subject = 'Automated Email'
     body = 'This is an automated email sent by a Python script. https://chronosbait.onrender.com/'
