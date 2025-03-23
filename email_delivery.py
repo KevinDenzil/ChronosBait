@@ -3,18 +3,30 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send_email(recipient_email, subject, body):
-    # Hardcoded Email Credentials (Security Risk)
+    # Email credentials (Use an App Password for security)
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
     smtp_user = 'rhjananiya@gmail.com'  # Replace with your email
-    smtp_password = 'dqdy pbav ztyn mjdv'  # Replace with your App Password (not your actual password)
+    smtp_password = 'dqdy pbav ztyn mjdv'  # Replace with your App Password
 
     # Create a MIME message
     msg = MIMEMultipart()
     msg['From'] = smtp_user
     msg['To'] = recipient_email
     msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
+
+    # HTML body with a clickable hyperlink
+    html_body = f"""
+    <html>
+    <body>
+        <p>This is an automated email sent by a Python script.<br>
+        Click <a href="{body}" target="_blank">here</a> to visit the link.</p>
+    </body>
+    </html>
+    """
+
+    # Attach the HTML content
+    msg.attach(MIMEText(html_body, 'html'))
 
     try:
         # Connect to the SMTP server
@@ -36,5 +48,5 @@ def send_email(recipient_email, subject, body):
 if __name__ == '__main__':
     recipient_email = 'h0r402040@gmail.com'
     subject = 'Automated Email'
-    body = 'This is an automated email sent by a Python script. https://chronosbait.onrender.com/'
-    send_email(recipient_email, subject, body)
+    link = 'https://chronosbait.onrender.com/'  # The link you want to send
+    send_email(recipient_email, subject, link)
