@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacked!</title>
+    <style>
+        body {
+            background-image: url("back.gif") ;
+            color: red;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 40px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id ="message"><h1>YOU HAVE BEEN HACKED!</h1></div>
+    <p>The system will shut down in:</p>
+    <div id="timer">10</div>
+    
+    <script>
+        function flashMessage() {
+            const message = document.getElementById("message");
+            let isVisible = false;
+      
+            setInterval(() => {
+              isVisible = !isVisible;
+              message.style.visibility = isVisible ? "visible" : "hidden";
+            }, 600); // Change the interval time to adjust the flashing speed
+          }
+          flashMessage();
+        let timeLeft = 10;
+        const timerElement = document.getElementById("timer");
+        
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                document.body.innerHTML = "<h1>SYSTEM COMPROMISED!</h1>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
