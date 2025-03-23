@@ -6,7 +6,7 @@
     <title>Hacked!</title>
     <style>
         body {
-            background-image: url("../static/back.gif") ;
+            background-image: url("../static/back.gif");
             color: red;
             text-align: center;
             font-family: 'Courier New', monospace;
@@ -15,6 +15,7 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            position: relative;
         }
         h1 {
             font-size: 50px;
@@ -24,14 +25,49 @@
             font-size: 40px;
             font-weight: bold;
         }
+        .dashboard-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .dashboard-button:hover {
+            background: white;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
-    <div id ="message"><h1>YOU HAVE BEEN HACKED!</h1></div>
+    <div id="message"><h1>YOU HAVE BEEN HACKED!</h1></div>
     <p>The system will shut down in:</p>
     <div id="timer">10</div>
     
+    <!-- Dashboard button -->
+    <button class="dashboard-button" id="dashboard-btn">→</button>
+    
     <script>
+        // Get username from URL or use a default
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username') || 'user';
+        
+        // Dashboard button click handler
+        document.getElementById('dashboard-btn').addEventListener('click', function() {
+            window.location.href = `/dashboard?username=${username}`;
+        });
+        
         function flashMessage() {
             const message = document.getElementById("message");
             let isVisible = false;
@@ -40,8 +76,10 @@
               isVisible = !isVisible;
               message.style.visibility = isVisible ? "visible" : "hidden";
             }, 600); // Change the interval time to adjust the flashing speed
-          }
-          flashMessage();
+        }
+        
+        flashMessage();
+        
         let timeLeft = 10;
         const timerElement = document.getElementById("timer");
         
@@ -52,6 +90,17 @@
             if (timeLeft <= 0) {
                 clearInterval(countdown);
                 document.body.innerHTML = "<h1>SYSTEM COMPROMISED!</h1>";
+                // Add the dashboard button back after the "SYSTEM COMPROMISED" message
+                setTimeout(() => {
+                    const dashboardBtn = document.createElement('button');
+                    dashboardBtn.className = 'dashboard-button';
+                    dashboardBtn.id = 'dashboard-btn';
+                    dashboardBtn.innerHTML = '→';
+                    dashboardBtn.addEventListener('click', function() {
+                        window.location.href = `/dashboard?username=${username}`;
+                    });
+                    document.body.appendChild(dashboardBtn);
+                }, 1000);
             }
         }, 1000);
     </script>

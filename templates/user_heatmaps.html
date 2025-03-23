@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ username }}'s Heatmaps</title>
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .heatmap-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .heatmap-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .heatmap-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .heatmap-info {
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .heatmap-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .no-heatmaps {
+            text-align: center;
+            padding: 50px 0;
+            color: #666;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ username }}'s Mouse Movement Heatmaps</h1>
+        
+        {% if heatmaps %}
+            <div class="heatmap-grid">
+                {% for heatmap in heatmaps %}
+                    <div class="heatmap-card">
+                        <img src="{{ url_for('static', filename=heatmap.path) }}" alt="Heatmap for {{ heatmap.username }}">
+                        <div class="heatmap-info">
+                            <p><strong>Date:</strong> {{ heatmap.timestamp }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-heatmaps">
+                <p>No heatmaps have been generated for {{ username }} yet.</p>
+            </div>
+        {% endif %}
+        
+        <div class="button-container">
+            <a href="/heatmaps" class="button">View All Heatmaps</a>
+            <a href="/" class="button">Back to Login</a>
+        </div>
+    </div>
+</body>
+</html>
