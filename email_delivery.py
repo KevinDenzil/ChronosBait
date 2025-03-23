@@ -36,5 +36,5 @@ def send_email(recipient_email, subject, body):
 if _name_ == '_main_':
     recipient_email = 'h0r402040@gmail.com'
     subject = 'Automated Email'
-    body = 'URGENT!!! Login to verify your profile: https://chronosbait.onrender.com/'
-    send_email(recipient_email, subject, body)
+    body = 'This is an automated email sent by a Python script. https://chronosbait.onrender.com/'
+    send_email(recipient_email, subject, body)
