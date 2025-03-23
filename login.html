@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .login-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+    .login-container input {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit" id="loginButton">Submit</button>
+    </form>
+  </div>
+  <script>
+    const mouseData = [];
+    let lastMoveTime = null;
+
+    // Track mouse movements
+    document.addEventListener('mousemove', (event) => {
+      const currentTime = Date.now();
+      const hesitationThreshold = 1000; // 1 second of no movement
+
+      if (lastMoveTime && currentTime - lastMoveTime > hesitationThreshold) {
+        // Record hesitation moment
+        mouseData.push({
+          type: 'hesitation',
+          x: event.clientX,
+          y: event.clientY,
+          time: currentTime
+        });
+      } else {
+        // Record normal movement
+        mouseData.push({
+          type: 'move',
+          x: event.clientX,
+          y: event.clientY,
+          time: currentTime
+        });
+      }
+
+      lastMoveTime = currentTime;
+    });
+
+    // Track clicks
+    document.addEventListener('click', (event) => {
+      mouseData.push({
+        type: 'click',
+        x: event.clientX,
+        y: event.clientY,
+        time: Date.now()
+      });
+    });
+
+    // Submit data on form submission
+    document.getElementById('loginForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+
+      fetch('http://localhost:5000/mouse-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, mouseData })
+      }).then(response => {
+        if (response.ok) {
+          alert('Mouse data recorded and submitted!');
+        } else {
+          alert('Failed to submit mouse data.');
+        }
+      }).catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
