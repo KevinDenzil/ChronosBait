@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background: url("back.gif") no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,31 +20,43 @@ body {
 
 h2 {
     margin-bottom: 20px;
+    color: #333;
 }
 
 label {
     display: block;
     margin: 10px 0 5px;
     text-align: left;
+    font-weight: bold;
 }
 
 input {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
 }
 
 button {
-    padding: 10px 15px;
+    width: 100%;
+    padding: 12px;
     border: none;
     background-color: #007bff;
     color: white;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 400px) {
+    .login-container {
+        width: 90%;
+    }
 }
